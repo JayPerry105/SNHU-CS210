@@ -12,5 +12,7 @@ class Store {
         }
         return charStr;
     }
+    
+    
 };
 
