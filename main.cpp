@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <map>
 #include "Store.h"
 
 using namespace std;
@@ -21,7 +22,9 @@ int main() {
     string productName;
     int productOccur = 0;
     string item;
-    
+    map<string, int> groceryCount;
+    string produceName;
+
     cout << "Opening file input_file.txt" << endl;
 
     inputFile.open("input_file.txt");
@@ -32,26 +35,37 @@ int main() {
 
     cout << "Opening file frequency.dat." << endl;
 
-    outputFile.open("frequency.dat");
+    /*outputFile.open("frequency.dat");
     if (!outputFile.is_open()) {
         cout << "Could not open file frequency.dat." << endl;
         return 1;
-    }
+    }*/
 
 
     inputFile >> productName;
-    
+
     while (!inputFile.fail()) {
-        outputFile << productName << endl;
-        cout << productName << endl;
+        if (!groceryCount.count(productName)) {
+            groceryCount.emplace(productName, 1);
+        }
+        else {
+            groceryCount.at(productName) += 1;
+        }
         inputFile >> productName;
         //outputFile << productName << endl;
+        //cout << productName << endl;
+        //inputFile >> productName;
+        //outputFile << productName << endl;
+
     }
 
     cout << "Closing input_file.txt" << endl;
     inputFile.close();
 
-    inputFile.open("input_file.txt");
+    cin >> produceName;
+    cout << groceryCount.at(produceName);
+
+   /* inputFile.open("input_file.txt");
     cin >> item;
 
     inputFile >> productName;
@@ -66,7 +80,7 @@ int main() {
     cout << productOccur << endl;
 
     cout << "Closing input_file.txt" << endl;
-    inputFile.close();
+    inputFile.close();*/
 
 
     return 0;
