@@ -6,24 +6,6 @@
 
 using namespace std;
 
-//string nCharString(size_t n, char c) {
-//    int i;
-//    string charStr;
-//
-//    for (i = 0; i < n; ++i) {
-//        charStr += c;
-//    }
-//    return charStr;
-//}
-
-//void printMenu() {
-//    cout << "Select an option by entering 1, 2, 3, or 4. " << endl << endl;
-//    cout << "Option 1: Enter item you wish to search for." << endl;
-//    cout << "Option 2: Print list of items with frequncy of purchases." << endl;
-//    cout << "Option 3: Print list of items with frequency of purchases as histrogram." << endl;
-//    cout << "Option 4: Exit the program." << endl;
-//}
-
 
 int main() {
     ifstream inputFile;
@@ -41,36 +23,37 @@ int main() {
 
     cout << "Opening file input_file.txt" << endl;
 
-    inputFile.open("input_file.txt");
+    inputFile.open("input_file.txt");  // Opens file to read product sales from
     if (!inputFile.is_open()) {
-        cout << "Could not open file input_file.txt." << endl;
+        cout << "Could not open file input_file.txt." << endl; // Lets user know if file was unable to open properly
         return 1;
     }
 
     cout << "Opening file frequency.dat." << endl;
 
-    outputFile.open("frequency.dat");
+    outputFile.open("frequency.dat"); // Opens file to write product sales to
     if (!outputFile.is_open()) {
-        cout << "Could not open file frequency.dat." << endl;
+        cout << "Could not open file frequency.dat." << endl; // Lets user know if file was unable to open properly
         return 1;
     }
 
 
 
 
-    inputFile >> productName;
+    inputFile >> productName; // Sets variable to current product name from input file list
 
-    while (!inputFile.fail()) {
-        if (!groceryCount.count(productName)) {
-            groceryCount.emplace(productName, 1);
-            allProducts.push_back(productName);
+    while (!inputFile.fail()) { // Checks to see that we are not at end of file
+        if (!groceryCount.count(productName)) { // Checks if product name is already in map
+            groceryCount.emplace(productName, 1); // If product is not yet in map, add it to map and give it a value of 1
+            allProducts.push_back(productName);  // Adds product name to a list
         }
         else {
-            groceryCount.at(productName) += 1;
+            groceryCount.at(productName) += 1; //  If product is already in list, increment value by 1
         }
-        inputFile >> productName;
+        inputFile >> productName; // Assign next product name to variable
     }
 
+    // Iterates through allProducts list and writes items into data file along with count of times purchased
     for (iter = allProducts.begin(); iter != allProducts.end(); ++iter) {
         item = *iter;
         outputFile << item << " " << groceryCount.at(item) << endl;
@@ -80,30 +63,31 @@ int main() {
 
 
     cout << "Closing input_file.txt" << endl;
-    inputFile.close();
+    inputFile.close(); // Closes input file
 
     cout << "Closing output file frequency.dat." << endl;
-    outputFile.close();
+    outputFile.close(); // Closes output file
 
     cout << endl;
 
     cout << myStore.nCharString(26, '*') << endl;
     cout << "  The Corner Grocer App" << endl;
     cout << myStore.nCharString(26, '*') << endl << endl;
+    // Displays app title graphic to user
 
     myStore.PrintMenu();
     cin >> menuChoice;
 
-    while (menuChoice != 4) {
+    while (menuChoice != 4) { // Checks to see if user entered '4' to exit program
         if (menuChoice == 1) {
             cout << "Please enter an item." << endl;
-            cin >> searchItem;
-            if (groceryCount.count(searchItem)) {
+            cin >> searchItem; // Sets variable to product name customer wants to look up
+            if (groceryCount.count(searchItem)) { //  Checks if desired product has been purchased
                 cout << groceryCount.at(searchItem) << endl << endl;
                 myStore.PrintMenu();
                 cin >> menuChoice;
             }
-            else {
+            else { // Prompts user for another item input if original input does not match any map item
                 cout << "Invalid entry, please try again" << endl;
             }
         }
@@ -111,7 +95,8 @@ int main() {
             for (iter = allProducts.begin(); iter != allProducts.end(); ++iter) {
                 item = *iter;
                 cout << item << " " << groceryCount.at(item) << endl;
-            }
+            } // Iterates through map and prints each item with number of times purchased
+
             cout << endl;
             myStore.PrintMenu();
             cin >> menuChoice;
@@ -120,12 +105,13 @@ int main() {
             for (iter = allProducts.begin(); iter != allProducts.end(); ++iter) {
                 item = *iter;
                 cout << item << " " << myStore.nCharString(groceryCount.at(item), '*') << endl;
-            }
+            } // iterates through map and prints 'n' number of '*'s to represent number of items purchased
+
             cout << endl;
             myStore.PrintMenu();
             cin >> menuChoice;
         }
-        else {
+        else { // Prompts user for another input since it was not 1, 2, 3, or 4
             cout << "Invalid entry, try again please." << endl;
             myStore.PrintMenu();
             cin >> menuChoice;
