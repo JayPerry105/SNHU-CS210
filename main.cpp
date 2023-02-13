@@ -6,23 +6,23 @@
 
 using namespace std;
 
-string nCharString(size_t n, char c) {
-    int i;
-    string charStr;
+//string nCharString(size_t n, char c) {
+//    int i;
+//    string charStr;
+//
+//    for (i = 0; i < n; ++i) {
+//        charStr += c;
+//    }
+//    return charStr;
+//}
 
-    for (i = 0; i < n; ++i) {
-        charStr += c;
-    }
-    return charStr;
-}
-
-void printMenu() {
-    cout << "Select an option by entering 1, 2, 3, or 4. " << endl << endl;
-    cout << "Option 1: Enter item you wish to search for." << endl;
-    cout << "Option 2: Print list of items with frequncy of purchases." << endl;
-    cout << "Option 3: Print list of items with frequency of purchases as histrogram." << endl;
-    cout << "Option 4: Exit the program." << endl;
-}
+//void printMenu() {
+//    cout << "Select an option by entering 1, 2, 3, or 4. " << endl << endl;
+//    cout << "Option 1: Enter item you wish to search for." << endl;
+//    cout << "Option 2: Print list of items with frequncy of purchases." << endl;
+//    cout << "Option 3: Print list of items with frequency of purchases as histrogram." << endl;
+//    cout << "Option 4: Exit the program." << endl;
+//}
 
 
 int main() {
@@ -37,6 +37,7 @@ int main() {
     list<string>::iterator iter;
     int menuChoice;
     string searchItem;
+    Store myStore;
 
     cout << "Opening file input_file.txt" << endl;
 
@@ -86,11 +87,11 @@ int main() {
 
     cout << endl;
 
-    cout << nCharString(26, '*') << endl;
+    cout << myStore.nCharString(26, '*') << endl;
     cout << "  The Corner Grocer App" << endl;
-    cout << nCharString(26, '*') << endl << endl;
+    cout << myStore.nCharString(26, '*') << endl << endl;
 
-    printMenu();
+    myStore.PrintMenu();
     cin >> menuChoice;
 
     while (menuChoice != 4) {
@@ -99,7 +100,7 @@ int main() {
             cin >> searchItem;
             if (groceryCount.count(searchItem)) {
                 cout << groceryCount.at(searchItem) << endl << endl;
-                printMenu();
+                myStore.PrintMenu();
                 cin >> menuChoice;
             }
             else {
@@ -112,20 +113,22 @@ int main() {
                 cout << item << " " << groceryCount.at(item) << endl;
             }
             cout << endl;
-            printMenu();
+            myStore.PrintMenu();
             cin >> menuChoice;
         }
-        else if (menuChoice == 3){
+        else if (menuChoice == 3) {
             for (iter = allProducts.begin(); iter != allProducts.end(); ++iter) {
                 item = *iter;
-                cout << item << " " << nCharString(groceryCount.at(item), '*') << endl;
+                cout << item << " " << myStore.nCharString(groceryCount.at(item), '*') << endl;
             }
             cout << endl;
-            printMenu();
+            myStore.PrintMenu();
             cin >> menuChoice;
         }
         else {
             cout << "Invalid entry, try again please." << endl;
+            myStore.PrintMenu();
+            cin >> menuChoice;
         }
     }
 
